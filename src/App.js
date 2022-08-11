@@ -1,21 +1,22 @@
+import mockData from './mockNewsData.json';
 import './App.css';
+import NewsSegment from './NewsSegment';
+
 
 function App() {
+
+  const data = mockData.response.results;
+
+  const segment = data.map( information => < NewsSegment
+      key={information.id}
+      image={information.fields.thumbnail}
+    text={information.fields.headline}
+  />)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://github.com/digital-futures-academy"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Digital Futures Academy
-        </a>
-      </header>
+    
+    <div>
+     {segment}
     </div>
   );
 }
