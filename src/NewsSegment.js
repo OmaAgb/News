@@ -4,9 +4,7 @@ const NewsSegment = ({ image, text }) => {
         
         <div> 
             <img src = {image} />
-            <h3>
-                {text}
-            </h3>
+            <h3>{text}</h3>
         </div>
     );
 }
