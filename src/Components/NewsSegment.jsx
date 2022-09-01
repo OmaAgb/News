@@ -1,3 +1,4 @@
+
 const NewsSegment = ({ image, text }) => {
     
     return (
