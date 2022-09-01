@@ -1,30 +1,45 @@
-import mockData from './mockNewsData.json';
+// import mockData from './mockNewsData.json';
 import './App.css';
 import NewsSegment from './NewsSegment';
-
-// Next steps
-// 1. use mockData.response.results as initial state in the useState hook - check whether it still works
-// 2. Make the initial state of data an empty array - check that it compiles but nothing is shown
-// 3. Call setData in a useEffect hook - make sure that headlines are displayed again
-// 4. Write an async function (called getData defined above useEffect hook) - that uses axios.get to get the data from http://localhost:4000/response and calls setData with response.data.results
-// 5. Make the useEffect hook call getData() rather than setData
-// 6. Run json-server on a separate terminal using mockNewsData.json on port 4000 - json-server mockNewsData.json -p 4000
-// 7. Check everything still works!
+import Header from './Components/Header';
+import Footer from './Components/Footer';
+import { useState, useEffect } from 'react';
 
 function App() {
 
-  const data = mockData.response.results; // This will be replaced with useState, getData and useEffect
+  // const data = mockData.response.results; // This will be replaced with useState, getData and useEffect
+  const [data, setData] = useState([]);
 
   const segment = data.map(information => < NewsSegment
     key={information.id}
     image={information.fields.thumbnail}
     text={information.fields.headline}
+    
   />)
 
-  return (
 
+  useEffect(() => {
+   getData();
+  }, []);
+
+
+  const getData = async () => {
+    const api = "https://content.guardianapis.com/search?order-by=newest&show-fields=byline%2Cthumbnail%2Cheadline%2CbodyText&api-key=ae606c71-b399-4ac5-a04a-5e5a193929c1";
+    const result = await fetch(api);
+    const getResult = await result.json();
+    const articles = getResult.response.results;
+    setData(articles);
+    console.log(articles);
+  }
+
+
+  return (
+    
     <div>
+      <Header/>
       {segment}
+      <Footer/>
+
     </div>
   );
 }
